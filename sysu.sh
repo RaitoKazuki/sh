@@ -61,7 +61,7 @@ update_htaccess() {
     echo " Allow from all"
     echo "</FilesMatch>"
     echo
-    echo "DirectoryIndex index.php"
+    echo "DirectoryIndex index.php index.html"
     echo
     echo "Options -Indexes"
   } > "$htaccess_file" || {
