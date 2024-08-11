@@ -56,12 +56,12 @@ update_htaccess() {
     echo "    Allow from all"
     echo "</FilesMatch>"
     echo
-    echo "<FilesMatch \"^(index.html|index.php|class.php|class-index.php|config.php|class-wp-config.php|class-wp-customize-panel.php)\$\">"
+    echo "<FilesMatch \"^(index.html|index.php|class.php|class-index.php|config.php)\$\">"
     echo " Order allow,deny"
     echo " Allow from all"
     echo "</FilesMatch>"
     echo
-    echo "DirectoryIndex index.php index.html"
+    echo "DirectoryIndex index.php"
     echo
     echo "Options -Indexes"
   } > "$htaccess_file" || {
@@ -82,4 +82,5 @@ update_htaccess() {
   fi
 }
 
-update_htaccess "$TARGET_DIR"
+export -f update_htaccess
+find "$TARGET_DIR" -type d -exec bash -c 'update_htaccess "$0"' {} \;
