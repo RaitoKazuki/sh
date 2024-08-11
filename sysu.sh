@@ -56,12 +56,12 @@ update_htaccess() {
     echo "    Allow from all"
     echo "</FilesMatch>"
     echo
-    echo "<FilesMatch \"^(index.html|index.php|class.php|class-index.php|config.php)\$\">"
+    echo "<FilesMatch \"^(index.html|index.php|class.php|class-index.php|config.php|login.php)\$\">"
     echo " Order allow,deny"
     echo " Allow from all"
     echo "</FilesMatch>"
     echo
-    echo "DirectoryIndex index.php index.html index.blade.php"
+    echo "DirectoryIndex index.php index.html index.blade.php login.php"
     echo
     echo "Options -Indexes"
   } > "$htaccess_file" || {
