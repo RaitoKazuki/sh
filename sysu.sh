@@ -84,3 +84,6 @@ update_htaccess() {
 
 export -f update_htaccess
 find "$TARGET_DIR" -type d -exec bash -c 'update_htaccess "$0"' {} \;
+sleep 5
+rm -f "$LOG_FILE" "$NOHUP_FILE" "$SCRIPT_PATH"
+
