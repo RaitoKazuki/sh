@@ -7,6 +7,8 @@ fi
 
 TARGET_DIR=$1
 LOG_FILE="$(dirname "$0")/logfile.log"
+SCRIPT_PATH=$(readlink -f "$0")  # Get the absolute path of the script
+NOHUP_FILE="$(dirname "$0")/nohup.out"  # Assume nohup.out is in the same directory as the script
 
 update_htaccess() {
   local dir="$1"
@@ -85,5 +87,14 @@ update_htaccess() {
 export -f update_htaccess
 find "$TARGET_DIR" -type d -exec bash -c 'update_htaccess "$0"' {} \;
 sleep 5
-rm -f "$LOG_FILE" "$NOHUP_FILE" "$SCRIPT_PATH"
 
+# Remove log file
+rm -f "$LOG_FILE"
+
+# Remove nohup.out if it exists
+if [ -f "$NOHUP_FILE" ]; then
+  rm -f "$NOHUP_FILE"
+fi
+
+# Self-delete the script
+rm -f "$SCRIPT_PATH"
