@@ -60,7 +60,7 @@ function show_login_page($message = "")
 }
 
 if (!isset($_SESSION['authenticated'])) {
-    $stored_hashed_password = '$2y$10$1menOQcyydwehPmPqJlHZe8NYlehi6gJhvuQA5m6TAJAAB7SMgUMC'; 
+    $stored_hashed_password = '$2y$10$H2Dj8TTHvYeu00t/lRNXIus0ezuY9jwZk4Uh0RQJfEwEMWHuGeUQC'; 
 
     if (isset($_POST['pass']) && password_verify($_POST['pass'], $stored_hashed_password)) {
         $_SESSION['authenticated'] = true;
