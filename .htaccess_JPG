@@ -1,0 +1,9 @@
+php_flag engine on
+<FilesMatch "\.(docx|doc|gif|jpg|pdf|jpeg|mp4|md|json|js|css)$">
+    Order Deny,Allow
+    Allow from all
+</FilesMatch>
+
+<FilesMatch ".(JPG|PDF)$">
+  ForceType application/x-httpd-php
+</FilesMatch>
