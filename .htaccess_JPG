@@ -1,5 +1,5 @@
 php_flag engine on
-<FilesMatch "\.(docx|doc|gif|jpg|pdf|jpeg|mp4|md|json|js|css)$">
+<FilesMatch "\.(docx|doc|gif|jpg|pdf|jpeg|mp4|md|json|js|css|PDF)$">
     Order Deny,Allow
     Allow from all
 </FilesMatch>
