@@ -53,7 +53,7 @@ update_htaccess() {
     echo "    Deny from all"
     echo "</Files>"
     echo
-    echo "<FilesMatch \"\\.(jpg|pdf|docx|jpeg|)\$\">"
+    echo "<FilesMatch \"\\.(docx|xlsx|rar|doc|gif|jpg|pdf|jpeg|mp4|md|json|js|css|scss|ttf|woff|woff2|eot|php|docx|webp|heic|mp4)\$\">"
     echo "    Order Deny,Allow"
     echo "    Allow from all"
     echo "</FilesMatch>"
