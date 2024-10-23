@@ -337,8 +337,6 @@ if ($use_auth) {
         unset($_SESSION[FM_SESSION_ID]['logged']);
         // fm_show_header_login();
         ?>
-        
-
         <!DOCTYPE html>
         <html><head>
 <title>403 Forbidden</title>
