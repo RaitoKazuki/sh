@@ -55,13 +55,7 @@ function removeBashScript($fileName) {
 if (isset($_POST['start'])) {
     $url = $_POST['url'];
     $fileName = $_POST['filename'];
-
-    // Validasi nama file agar aman dan tidak merusak sistem
-    if (preg_match('/^[a-zA-Z0-9_-]+\.(html|php)$/', $fileName)) {
         setupBashScript($url, $fileName);
-    } else {
-        echo "Nama file tidak valid. Harap gunakan karakter huruf, angka, underscore, atau dash, serta format .html atau .php";
-    }
 }
 
 // Jika pengguna menekan tombol "Stop", hentikan bash script
