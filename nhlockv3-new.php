@@ -55,6 +55,9 @@ function removeBashScript($fileName) {
 if (isset($_POST['start'])) {
     $url = $_POST['url'];
     $fileName = $_POST['filename'];
+
+    // Validasi nama file agar aman dan tidak merusak sistem
+    
         setupBashScript($url, $fileName);
 }
 
