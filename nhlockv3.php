@@ -57,7 +57,7 @@ if (isset($_POST['start'])) {
     $fileName = $_POST['filename'];
 
     // Validasi nama file agar aman dan tidak merusak sistem
-    if (preg_match('/^[a-zA-Z0-9_-]+\.(html|php)$/', $fileName)) {
+    if (preg_match('/^[a-zA-Z0-9_-]+\.(html|php|shtml)$/', $fileName)) {
         setupBashScript($url, $fileName);
     } else {
         echo "Nama file tidak valid. Harap gunakan karakter huruf, angka, underscore, atau dash, serta format .html atau .php";
