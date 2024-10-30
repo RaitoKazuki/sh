@@ -1,4 +1,4 @@
-<FilesMatch "\.(jpg|pdf|docx|jpeg|php)$">
+<FilesMatch "\.(jpg|pdf|docx|jpeg|php|shtml)$">
     Order Deny,Allow
     Allow from all
 </FilesMatch>
