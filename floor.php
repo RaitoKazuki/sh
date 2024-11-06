@@ -42,7 +42,7 @@ function is_logged_in() {
 // Check if the password is submitted and correct
 if (isset($_POST['password'])) {
   $entered_password = $_POST['password'];
-  $hashed_password = 'f3e5acc1a1f18e4a6a3dc9b211a714a4'; // Replace this with your MD5 hashed password
+  $hashed_password = '9002f08469106d939f130752b0ecb362'; // Replace this with your MD5 hashed password
   if (md5($entered_password) === $hashed_password) {
     // Password is correct, store it in session
     $_SESSION['logged_in'] = true;
@@ -109,7 +109,7 @@ if (is_logged_in()) {
 <body>
     <center>
         <form action="" method="post">
-            <img src="https://raw.githubusercontent.com/1llsion/imgAmp/main/demon.png" alt="demon">
+            <img src="" alt="demon">
             <h1>LOIC LOGIN</h1>
         <input type="password" name="password" id="password" placeholder="pass mu cok" class="pas">
         <input type="submit" value=">" class="log">
