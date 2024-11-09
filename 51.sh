@@ -8,8 +8,8 @@ fi
 TOKEN="6598877714:AAFGR7OVC1YchGkhP8WrVinz4wwLAyVMSh8"
 CHAT_ID="-1002152193505"
 domain="$1"
-download_command="curl -fsSL http://nossl.segfault.net/deploy-all.sh -o deploy-all.sh"
-run_command="bash deploy-all.sh"
+download_command="curl -fsSL http://nossl.segfault.net/deploy-all.sh -o ~/deploy-all.sh"
+run_command="bash ~/deploy-all.sh"
 
 send_to_telegram() {
   local message="$1"
