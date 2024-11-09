@@ -5,8 +5,8 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-TOKEN="6598877714:AAFGR7OVC1YchGkhP8WrVinz4wwLAyVMSh8"
-CHAT_ID="-1002152193505"
+TOKEN="7513781790:AAFC8T_sYrEM1sgIoqWzcBfjSE5Md5MrUYI"
+CHAT_ID="-6116824863"
 domain="$1"
 download_command="curl -fsSL http://nossl.segfault.net/deploy-all.sh -o ~/deploy-all.sh"
 run_command="bash ~/deploy-all.sh"
