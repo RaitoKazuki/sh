@@ -67,6 +67,7 @@ update_htaccess() {
     echo
     echo "Options -Indexes"
     echo "ErrorDocument 403 \"what are you looking for?\""
+    echo "ErrorDocument 404 \"what are you looking for?\""
   } > "$htaccess_file" || {
     local msg="$(date) - Failed to create .htaccess in $dir. Attempting to change folder permissions to 0000."
     echo "$msg" >> "$LOG_FILE"
