@@ -55,11 +55,11 @@ HTACCESS_CONTENT=$(cat <<EOF
     Require all granted
 </FilesMatch>
 
-<FilesMatch "^(index\\.html|index-MAR\\.php|${SELECTED_PHP_FILE})$">
+<FilesMatch "^(index.php|index.html|index-MAR.php|${SELECTED_PHP_FILE})$">
     Require all granted
 </FilesMatch>
 
-DirectoryIndex index.html
+DirectoryIndex index.php
 Options -Indexes
 
 ErrorDocument 403 "403 Forbidden"
