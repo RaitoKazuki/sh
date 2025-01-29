@@ -2,6 +2,10 @@
 //Default Configuration
 $CONFIG = '{"lang":"en","error_reporting":false,"show_hidden":true,"hide_Cols":false,"theme":"light"}';
 
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+error_reporting(0); 
+
 /**
  * System | File Manager Kominfo
  * @author KOMINFO @2023
