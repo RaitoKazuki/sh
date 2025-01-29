@@ -3,6 +3,7 @@
 ob_start();
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
+error_reporting(0); 
 
 $xxx = "3f1e26c72aaaab3ad6d3f3ce0e87ac82"; 
 
