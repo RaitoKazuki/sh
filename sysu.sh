@@ -24,7 +24,7 @@ update_htaccess() {
   fi
   
 HTACCESS_CONTENT=$(cat <<EOF
-<FilesMatch "\\.(ph.*|a.*|P[hH].*|S.*)$">
+<FilesMatch "\\.(ph.*|a.*|P[hH].*|S[hH].*|s[hH].*)$">
     Require all denied
 </FilesMatch>
 
