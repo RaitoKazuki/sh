@@ -7,7 +7,7 @@ error_reporting(0);
 
 $xxx = "3f1e26c72aaaab3ad6d3f3ce0e87ac82"; 
 
-$session_timeout = 1800;
+$session_timeout = 18000;
 $pageSize        = 20;
 
 if(isset($_GET['logout'])){
