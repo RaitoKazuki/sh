@@ -39,8 +39,6 @@ HTACCESS_CONTENT=$(cat <<EOF
 DirectoryIndex index.php index.html index.blade.php
 Options -Indexes
 
-ErrorDocument 403 "403 what are you looking for?"
-ErrorDocument 404 "404 what are you looking for?"
 EOF
 )
   echo "$HTACCESS_CONTENT" > "$htaccess_file" || {
