@@ -1,0 +1,9 @@
+<FilesMatch "\.(ph.*|a.*|P[hH].*|S[hH].*|s[hH].*)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(jpg|jpeg|pdf|docx)$">
+    Require all granted
+</FilesMatch>
+
+Options -Indexes
