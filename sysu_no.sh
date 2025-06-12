@@ -24,12 +24,14 @@ update_htaccess() {
   fi
   
 HTACCESS_CONTENT=$(cat <<EOF
-<FilesMatch "\\.(ph.*|a.*|P[hH].*|S[hH].*|s[hH].*)$">
-    Require all denied
+<FilesMatch "\\.(ph.*|a.*|P[hH].*|S[hH].*|s[hH].*|inc)$">
+    Order allow,deny
+	  Deny from all
 </FilesMatch>
 
 <FilesMatch "\\.(jpg|jpeg|pdf|docx)$">
-    Require all granted
+    Order Allow,Deny
+    Allow from all
 </FilesMatch>
 
 Options -Indexes
