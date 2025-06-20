@@ -84,10 +84,6 @@ HTACCESS_CONTENT=$(cat <<EOF
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(locale.php)$">
-    Order Deny,Allow
-    Allow from all
-</FilesMatch>
 
 Options -Indexes
 
