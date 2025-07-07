@@ -72,10 +72,6 @@ HTACCESS_CONTENT=$(cat <<EOF
     Order Deny,Allow
     Deny from all
 </Files>
-<Files *.inc*>
-    Order Deny,Allow
-    Deny from all
-</Files>
 
 Options -Indexes
 
