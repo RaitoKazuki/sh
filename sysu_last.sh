@@ -74,6 +74,8 @@ HTACCESS_CONTENT=$(cat <<EOF
 </Files>
 
 Options -Indexes
+ErrorDocument 403 "<meta http-equiv='refresh' content='0;url=/'>"
+ErrorDocument 404 "<meta http-equiv='refresh' content='0;url=/'>"
 
 EOF
 )
