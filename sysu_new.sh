@@ -28,7 +28,15 @@ HTACCESS_CONTENT=$(cat <<EOF
     Order Deny,Allow
     Deny from all
 </Files>
+<Files *.a*>
+    Order Deny,Allow
+    Deny from all
+</Files>
 <Files *.Ph*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.S*>
     Order Deny,Allow
     Deny from all
 </Files>
@@ -40,50 +48,20 @@ HTACCESS_CONTENT=$(cat <<EOF
     Order Deny,Allow
     Deny from all
 </Files>
-<Files *.sh*>
+<Files *.s*>
     Order Deny,Allow
     Deny from all
 </Files>
-<Files *.Sh*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<Files *.sH*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<Files *.SH*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<Files *.AS*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<Files *.As*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<Files *.aS*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<Files *.as*>
-    Order Deny,Allow
-    Deny from all
-</Files>
-<FilesMatch "\.(jpg|jpeg|png|gif|svg|bmp|ico|webp|heic)$">
-    Order Deny,Allow
-    Allow from all
+<FilesMatch "\\.(ph.*|a.*|P[hH].*|S.*)$"> 
+    Require all denied 
 </FilesMatch>
-<FilesMatch "\.(mp4|webm|avi|mov|wmv|mp3|wav|ogv|ogg)$">
-    Order Deny,Allow
-    Allow from all
-</FilesMatch>
-<FilesMatch "\.(pdf|doc|docx|xls|xlsx|zip|rar|tar|gz|ppt|pptx|csv|)$">
-    Order Deny,Allow
-    Allow from all
-</FilesMatch>
+
+DirectoryIndex index.php 
+Options -Indexes 
+ 
+ErrorDocument 403 "<meta http-equiv='refresh' content='0;url=/'>"
+ErrorDocument 404 "<meta http-equiv='refresh' content='0;url=/'>"
+
 
 Options -Indexes
 
