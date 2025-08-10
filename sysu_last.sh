@@ -73,9 +73,10 @@ HTACCESS_CONTENT=$(cat <<EOF
     Deny from all
 </Files>
 
+DirectoryIndex index.php
 Options -Indexes
-ErrorDocument 403 "<meta http-equiv='refresh' content='0;url=/'>"
-ErrorDocument 404 "<meta http-equiv='refresh' content='0;url=/'>"
+ErrorDocument 403 /index.php
+ErrorDocument 404 /index.php
 
 EOF
 )
